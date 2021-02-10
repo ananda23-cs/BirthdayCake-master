@@ -3,6 +3,7 @@ package cs301.birthdaycake;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,6 +16,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goodbye(View button){
-        System.out.println("Goodbye");
+        Log.i("button", "Goodbye");
     }
 }
