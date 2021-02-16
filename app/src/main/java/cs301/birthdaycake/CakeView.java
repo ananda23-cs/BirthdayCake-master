@@ -125,6 +125,8 @@ public class CakeView extends SurfaceView {
 
         //Now a candle in the center
         switch (model.numCandles){
+            case 0:
+                break;
             case 1:
                 drawCandle(canvas,cakeLeft + cakeWidth/2 - candleWidth/2, cakeTop);
                 break;
