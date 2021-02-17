@@ -27,6 +27,10 @@ public class MainActivity extends AppCompatActivity {
         Switch candle = (Switch)findViewById(R.id.switch2);
         candle.setOnCheckedChangeListener(controller);
 
+        //Switch to change the frosting of the cake
+        Switch frosting = (Switch)findViewById(R.id.switch1);
+        frosting.setOnCheckedChangeListener(controller);
+
         //Seekbar to change the number of candles in the cake
         SeekBar numCandle = (SeekBar)findViewById(R.id.seekBar);
         numCandle.setOnSeekBarChangeListener(controller);

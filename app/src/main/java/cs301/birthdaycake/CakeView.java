@@ -101,6 +101,12 @@ public class CakeView extends SurfaceView {
     @Override
     public void onDraw(Canvas canvas)
     {
+        if(model.frosting == true){
+            frostingPaint.setColor(0xFF0AFF03); //key lime
+        } else{
+            frostingPaint.setColor(0xFFFFFACD); //pale yellow
+        }
+
         //top and bottom are used to keep a running tally as we progress down the cake layers
         float top = cakeTop;
         float bottom = cakeTop + frostHeight;
@@ -123,35 +129,9 @@ public class CakeView extends SurfaceView {
         //Then a second cake layer
         canvas.drawRect(cakeLeft, top, cakeLeft + cakeWidth, bottom, cakePaint);
 
-        //Now a candle in the center
-        switch (model.numCandles){
-            case 0:
-                break;
-            case 1:
-                drawCandle(canvas,cakeLeft + cakeWidth/2 - candleWidth/2, cakeTop);
-                break;
-            case 2:
-                drawCandle(canvas, cakeLeft + (2*cakeWidth/3) - (2*candleWidth/3), cakeTop);
-                drawCandle(canvas,cakeLeft + cakeWidth/3 - candleWidth/3, cakeTop);
-                break;
-            case 3:
-                drawCandle(canvas, cakeLeft + (3*cakeWidth/4) - (3*candleWidth/4), cakeTop);
-                drawCandle(canvas,cakeLeft + cakeWidth/2 - candleWidth/2, cakeTop);
-                drawCandle(canvas, cakeLeft + cakeWidth/4 - candleWidth/4, cakeTop);
-                break;
-            case 4:
-                drawCandle(canvas, cakeLeft + (4*cakeWidth/5) - (4*candleWidth/3), cakeTop);
-                drawCandle(canvas,cakeLeft + (3*cakeWidth/5) - (3*candleWidth/5), cakeTop);
-                drawCandle(canvas, cakeLeft + (2*cakeWidth/5) - (2*candleWidth/3), cakeTop);
-                drawCandle(canvas,cakeLeft + cakeWidth/5 - candleWidth/5, cakeTop);
-                break;
-            case 5:
-                drawCandle(canvas, cakeLeft + (5*cakeWidth/6) - (5*candleWidth/6), cakeTop);
-                drawCandle(canvas, cakeLeft + (2*cakeWidth/3) - (2*candleWidth/3), cakeTop);
-                drawCandle(canvas,cakeLeft + cakeWidth/2 - candleWidth/2, cakeTop);
-                drawCandle(canvas,cakeLeft + cakeWidth/3 - candleWidth/3, cakeTop);
-                drawCandle(canvas, cakeLeft + cakeWidth/6 - candleWidth/6, cakeTop);
-                break;
+        //Now draw candles as indicated by seekbar
+        for(int i = 0; i < model.numCandles; i++){
+            drawCandle(canvas,cakeLeft + ((model.numCandles-i)*cakeWidth/(model.numCandles + 1)) - ((model.numCandles-i)*candleWidth/(model.numCandles + 1)), cakeTop);
         }
     }//onDraw
 
