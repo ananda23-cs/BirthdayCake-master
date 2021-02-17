@@ -22,11 +22,13 @@ public class CakeController implements View.OnClickListener, CompoundButton.OnCh
         if(clickCount % 2 != 0) {
             Log.d("blowOut", "Poof!");
             v.setTag(R.id.button, "Re-Light");
+            ((Button) v).setText("Re-Light");
             model.litCandles = false;
             view.invalidate();
         } else{
             Log.d("Re-Light", "Candles re-lit");
             v.setTag(R.id.button, "blowOut");
+            ((Button) v).setText("Blow Out");
             model.litCandles = true;
             view.invalidate();
         }
@@ -54,4 +56,5 @@ public class CakeController implements View.OnClickListener, CompoundButton.OnCh
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {}
+
 }
