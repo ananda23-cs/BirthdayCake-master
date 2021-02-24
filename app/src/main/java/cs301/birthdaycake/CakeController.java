@@ -1,6 +1,8 @@
 package cs301.birthdaycake;
 
+import android.graphics.Canvas;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;

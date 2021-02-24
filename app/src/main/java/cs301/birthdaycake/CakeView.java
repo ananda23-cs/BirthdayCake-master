@@ -9,9 +9,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 
-
-
-public class CakeView extends SurfaceView implements View.OnTouchListener {
+public class CakeView extends SurfaceView implements View.OnTouchListener{
 
     /* These are the paints we'll use to draw the birthday cake below */
     Paint cakePaint = new Paint();
@@ -20,6 +18,7 @@ public class CakeView extends SurfaceView implements View.OnTouchListener {
     Paint outerFlamePaint = new Paint();
     Paint innerFlamePaint = new Paint();
     Paint wickPaint = new Paint();
+    Paint textPaint = new Paint();
 
     /* These constants define the dimensions of the cake.  While defining constants for things
         like this is good practice, we could be calculating these better by detecting
@@ -37,10 +36,9 @@ public class CakeView extends SurfaceView implements View.OnTouchListener {
     public static final float wickWidth = 6.0f;
     public static final float outerFlameRadius = 30.0f;
     public static final float innerFlameRadius = 15.0f;
-    private float x;
-    private float y;
 
     private CakeModel model;
+    private float x, y;
 
     /**
      * ctor must be overridden here as per standard Java inheritance practice.  We need it
@@ -70,8 +68,9 @@ public class CakeView extends SurfaceView implements View.OnTouchListener {
 
         model = new CakeModel();
 
-        setOnTouchListener(this);
+        textPaint.setColor(Color.RED);
 
+        setOnTouchListener(this);
     }
 
     /**
@@ -143,6 +142,9 @@ public class CakeView extends SurfaceView implements View.OnTouchListener {
             drawCandle(canvas,cakeLeft + ((model.numCandles-i)*cakeWidth/(model.numCandles + 1)) - ((model.numCandles-i)*candleWidth/(model.numCandles + 1)), cakeTop);
         }
 
+        textPaint.setTextSize(60.0f);
+        canvas.drawText(getCoordinate(x, y), 1500.0f, 500.0f, textPaint);
+
         drawBalloon(canvas, x, y);
 
     }//onDraw
@@ -153,12 +155,20 @@ public class CakeView extends SurfaceView implements View.OnTouchListener {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        x = event.getX();
-        y = event.getY();
-        invalidate();
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            x = event.getX();
+            y = event.getY();
 
+            invalidate();
+        }
         return true;
     }
+
+    public String getCoordinate(float x, float y){
+        return "(" + x + ", " + y + ")";
+    }
+
+
     public void drawBalloon(Canvas can, float dimX, float dimY)
     {
         Paint paint = new Paint();
