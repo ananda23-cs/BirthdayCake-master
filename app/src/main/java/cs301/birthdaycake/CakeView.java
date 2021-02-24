@@ -5,9 +5,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.SurfaceView;
+import android.view.View;
 
-public class CakeView extends SurfaceView {
+public class CakeView extends SurfaceView implements View.OnTouchListener{
 
     /* These are the paints we'll use to draw the birthday cake below */
     Paint cakePaint = new Paint();
@@ -16,6 +18,7 @@ public class CakeView extends SurfaceView {
     Paint outerFlamePaint = new Paint();
     Paint innerFlamePaint = new Paint();
     Paint wickPaint = new Paint();
+    Paint textPaint = new Paint();
 
     /* These constants define the dimensions of the cake.  While defining constants for things
         like this is good practice, we could be calculating these better by detecting
@@ -35,6 +38,7 @@ public class CakeView extends SurfaceView {
     public static final float innerFlameRadius = 15.0f;
 
     private CakeModel model;
+    private float x, y;
 
     /**
      * ctor must be overridden here as per standard Java inheritance practice.  We need it
@@ -63,6 +67,10 @@ public class CakeView extends SurfaceView {
         setBackgroundColor(Color.WHITE);  //better than black default
 
         model = new CakeModel();
+
+        textPaint.setColor(Color.RED);
+
+        setOnTouchListener(this);
     }
 
     /**
@@ -133,10 +141,28 @@ public class CakeView extends SurfaceView {
         for(int i = 0; i < model.numCandles; i++){
             drawCandle(canvas,cakeLeft + ((model.numCandles-i)*cakeWidth/(model.numCandles + 1)) - ((model.numCandles-i)*candleWidth/(model.numCandles + 1)), cakeTop);
         }
+
+        textPaint.setTextSize(60.0f);
+        canvas.drawText(getCoordinate(x, y), 1500.0f, 500.0f, textPaint);
     }//onDraw
 
     public CakeModel getModel(){
         return model;
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            x = event.getX();
+            y = event.getY();
+
+            invalidate();
+        }
+        return true;
+    }
+
+    public String getCoordinate(float x, float y){
+        return "(" + x + ", " + y + ")";
     }
 }//class CakeView
 
