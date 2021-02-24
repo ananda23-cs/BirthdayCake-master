@@ -5,9 +5,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.SurfaceView;
+import android.view.View;
 
-public class CakeView extends SurfaceView {
+
+
+public class CakeView extends SurfaceView implements View.OnTouchListener {
 
     /* These are the paints we'll use to draw the birthday cake below */
     Paint cakePaint = new Paint();
@@ -33,6 +37,8 @@ public class CakeView extends SurfaceView {
     public static final float wickWidth = 6.0f;
     public static final float outerFlameRadius = 30.0f;
     public static final float innerFlameRadius = 15.0f;
+    private float x;
+    private float y;
 
     private CakeModel model;
 
@@ -63,6 +69,9 @@ public class CakeView extends SurfaceView {
         setBackgroundColor(Color.WHITE);  //better than black default
 
         model = new CakeModel();
+
+        setOnTouchListener(this);
+
     }
 
     /**
@@ -133,10 +142,33 @@ public class CakeView extends SurfaceView {
         for(int i = 0; i < model.numCandles; i++){
             drawCandle(canvas,cakeLeft + ((model.numCandles-i)*cakeWidth/(model.numCandles + 1)) - ((model.numCandles-i)*candleWidth/(model.numCandles + 1)), cakeTop);
         }
+
+        drawBalloon(canvas, x, y);
+
     }//onDraw
 
     public CakeModel getModel(){
         return model;
     }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        x = event.getX();
+        y = event.getY();
+        invalidate();
+
+        return true;
+    }
+    public void drawBalloon(Canvas can, float dimX, float dimY)
+    {
+        Paint paint = new Paint();
+        paint.setColor(Color.BLUE);
+        can.drawOval(dimX - 60.0f, dimY - 80.0f, dimX + 60.0f, dimY + 80.0f, paint);
+        paint.setColor(Color.BLACK);
+
+        can.drawLine(dimX, dimY + 80.0f, dimX, dimY + 300.0f, paint);
+
+    }
+
 }//class CakeView
 
